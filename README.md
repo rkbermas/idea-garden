@@ -1,4 +1,4 @@
-# Idea Garden
+# Idea Garden 
 
 A personal bank of ideas you've encountered and want to keep thinking about: a commonplace book with linked ideas, backlinks, a knowledge graph, and resurfacing.
 
