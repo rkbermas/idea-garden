@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Idea Garden palette — herbarium paper.
+  paper   #F6F7F3  cool, faintly green page
+  sheet   #FFFFFF  raised writing surface
+  ink     #1B221E  green-black text
+  stem    #56625A  secondary text
+  line    #DCE1D9  rules and borders
+  juniper #2E5E4E  the single accent
+*/
+:root {
+  --paper: 246 247 243;
+  --sheet: 255 255 255;
+  --sunk: 238 241 235;
+  --ink: 27 34 30;
+  --stem: 86 98 90;
+  --faint: 138 148 141;
+  --line: 220 225 217;
+  --juniper: 46 94 78;
+  --moss: 226 236 229;
+  --bloom: 250 240 205;
+  --rust: 163 72 52;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: 18 22 20;
+  --sheet: 24 29 26;
+  --sunk: 14 17 15;
+  --ink: 226 231 225;
+  --stem: 152 164 155;
+  --faint: 106 117 109;
+  --line: 44 52 47;
+  --juniper: 138 191 165;
+  --moss: 31 45 38;
+  --bloom: 68 58 28;
+  --rust: 222 133 108;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-paper font-sans text-base text-ink;
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: rgb(var(--juniper) / 0.22);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--juniper));
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+  textarea {
+    resize: none;
+  }
+}
+
+@layer components {
+  /* Long-form reading text for ideas. */
+  .prose-idea {
+    @apply font-serif text-read text-ink;
+    font-variation-settings: "opsz" 18;
+    hyphens: manual;
+  }
+  .prose-idea p + p,
+  .prose-idea p + ul,
+  .prose-idea ul + p,
+  .prose-idea p + ol,
+  .prose-idea ol + p,
+  .prose-idea blockquote + p,
+  .prose-idea p + blockquote {
+    margin-top: 0.85em;
+  }
+  .prose-idea ul {
+    @apply list-disc pl-5;
+  }
+  .prose-idea ol {
+    @apply list-decimal pl-5;
+  }
+  .prose-idea li + li {
+    margin-top: 0.25em;
+  }
+  .prose-idea blockquote {
+    @apply border-l-2 border-line pl-4 text-stem;
+  }
+  .prose-idea h1,
+  .prose-idea h2,
+  .prose-idea h3 {
+    @apply mt-6 font-serif font-semibold;
+  }
+  .prose-idea code {
+    @apply rounded-sm bg-sunk px-1 py-px font-sans text-[0.85em];
+  }
+  .prose-idea mark {
+    @apply rounded-sm bg-bloom px-0.5 text-ink;
+  }
+  .prose-idea a.ext {
+    @apply underline decoration-line decoration-1 underline-offset-[3px] hover:decoration-juniper;
+  }
+
+  .wikilink {
+    @apply text-juniper decoration-juniper/40 underline decoration-1 underline-offset-[3px] transition-colors hover:decoration-juniper;
+  }
+  .wikilink-missing {
+    @apply text-stem decoration-faint underline decoration-dashed decoration-1 underline-offset-[3px] hover:text-ink;
+  }
+
+  .field {
+    @apply w-full rounded-md border border-line bg-sheet px-3 py-2 text-base text-ink placeholder:text-faint transition-colors focus:border-juniper/60 focus:outline-none focus:ring-2 focus:ring-juniper/15;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-stem;
+  }
+
+  .btn {
+    @apply inline-flex h-9 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md px-3.5 text-sm font-medium transition-[background-color,color,border-color,box-shadow] duration-150 disabled:pointer-events-none disabled:opacity-45;
+  }
+  .btn-primary {
+    @apply btn bg-juniper text-paper hover:bg-juniper/90 active:bg-juniper/80;
+  }
+  .btn-quiet {
+    @apply btn border border-line bg-sheet text-ink hover:border-faint/60 hover:bg-sunk/60;
+  }
+  .btn-ghost {
+    @apply btn text-stem hover:bg-sunk hover:text-ink;
+  }
+  .btn-danger {
+    @apply btn text-rust hover:bg-rust/10;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-[4px] bg-sunk px-1.5 py-0.5 text-xs text-stem transition-colors;
+  }
+  a.chip:hover,
+  button.chip:hover {
+    @apply bg-moss text-ink;
+  }
+
+  .section-title {
+    @apply font-serif text-lead font-medium text-ink;
+  }
+  .meta {
+    @apply text-sm text-stem;
+  }
+
+  .kbd {
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded border border-line bg-sheet px-1 font-sans text-2xs font-medium text-stem;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line)) transparent;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
